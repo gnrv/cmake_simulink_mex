@@ -1,89 +1,109 @@
 {
   "version": 6,
-
-"configurePresets": [
-{
-  "name": "default",
-  "binaryDir": "${sourceDir}/build",
-  "cacheVariables": {
-    "CMAKE_COMPILE_WARNING_AS_ERROR": false
-  }
-},
-{
-  "name": "msvc",
-  "inherits": "default",
-  "cacheVariables": {
-    "fortran": false
-  }
-}
-],
-"buildPresets": [
-  {
-    "name": "default",
-    "configurePreset": "default"
-  },
-  {
-    "name": "msvc",
-    "configurePreset": "msvc",
-    "configuration": "Release"
-  }
-],
-"testPresets": [
-{
-  "name": "default",
-  "configurePreset": "default",
-  "output": {
-    "outputOnFailure": true,
-    "verbosity": "verbose"
-  },
-  "execution": {
-    "noTestsAction": "error",
-    "scheduleRandom": true,
-    "stopOnFailure": false,
-    "timeout": 180,
-    "jobs": 0
-  }
-},
-{
-  "name": "msvc", "inherits": "default",
-  "configurePreset": "msvc",
-  "configuration": "Release"
-}
-],
-"workflowPresets": [
-  {
-    "name": "default",
-    "steps": [
-      {
-        "type": "configure",
-        "name": "default"
-      },
-      {
-        "type": "build",
-        "name": "default"
-      },
-      {
-        "type": "test",
-        "name": "default"
+  "configurePresets": [
+    {
+      "name": "default",
+      "binaryDir": "${sourceDir}/build",
+      "cacheVariables": {
+        "CMAKE_COMPILE_WARNING_AS_ERROR": false
       }
-    ]
-  },
-  {
-    "name": "msvc",
-    "steps": [
-      {
-        "type": "configure",
-        "name": "msvc"
+    },
+    {
+      "name": "msvc",
+      "inherits": "default"
+    }
+  ],
+  "buildPresets": [
+    {
+      "name": "msvc-debug",
+      "configurePreset": "msvc",
+      "configuration": "Debug"
+    },
+    {
+      "name": "msvc-release",
+      "configurePreset": "msvc",
+      "configuration": "Release"
+    },
+    {
+      "name": "msvc-relwithdebinfo",
+      "configurePreset": "msvc",
+      "configuration": "RelWithDebInfo"
+    }
+  ],
+  "testPresets": [
+    {
+      "name": "msvc-debug",
+      "configurePreset": "msvc",
+      "configuration": "Debug",
+      "output": {
+        "outputOnFailure": true,
+        "verbosity": "verbose"
       },
-      {
-        "type": "build",
-        "name": "msvc"
-      },
-      {
-        "type": "test",
-        "name": "msvc"
+      "execution": {
+        "noTestsAction": "error",
+        "scheduleRandom": true,
+        "stopOnFailure": false,
+        "timeout": 180,
+        "jobs": 0
       }
-    ]
-  }
-]
+    },
+    {
+      "name": "msvc-release",
+      "configurePreset": "msvc",
+      "configuration": "Release",
+      "output": {
+        "outputOnFailure": true,
+        "verbosity": "verbose"
+      },
+      "execution": {
+        "noTestsAction": "error",
+        "scheduleRandom": true,
+        "stopOnFailure": false,
+        "timeout": 180,
+        "jobs": 0
+      }
+    },
+    {
+      "name": "msvc-relwithdebinfo",
+      "configurePreset": "msvc",
+      "configuration": "RelWithDebInfo",
+      "output": {
+        "outputOnFailure": true,
+        "verbosity": "verbose"
+      },
+      "execution": {
+        "noTestsAction": "error",
+        "scheduleRandom": true,
+        "stopOnFailure": false,
+        "timeout": 180,
+        "jobs": 0
+      }
+    }
+  ],
+  "workflowPresets": [
+    {
+      "name": "msvc-debug",
+      "steps": [
+        { "type": "configure", "name": "msvc" },
+        { "type": "build", "name": "msvc-debug" },
+        { "type": "test", "name": "msvc-debug" }
+      ]
+    },
+    {
+      "name": "msvc-release",
+      "steps": [
+        { "type": "configure", "name": "msvc" },
+        { "type": "build", "name": "msvc-release" },
+        { "type": "test", "name": "msvc-release" }
+      ]
+    },
+    {
+      "name": "msvc-relwithdebinfo",
+      "steps": [
+        { "type": "configure", "name": "msvc" },
+        { "type": "build", "name": "msvc-relwithdebinfo" },
+        { "type": "test", "name": "msvc-relwithdebinfo" }
+      ]
+    }
+  ]
 }
