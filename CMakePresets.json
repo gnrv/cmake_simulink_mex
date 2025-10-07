@@ -10,12 +10,13 @@
   }
 },
 {
-  "name": "msvc",
+  "name": "mingw-w64",
   "inherits": "default",
-  "cacheVariables": {
-    "fortran": false
+    "environment": {
+      "MW_MINGW64_LOC": "C:\\mingw81",
+      "BAR": "some-other-value"
+    }
   }
-}
 ],
 "buildPresets": [
   {
@@ -23,9 +24,8 @@
     "configurePreset": "default"
   },
   {
-    "name": "msvc",
-    "configurePreset": "msvc",
-    "configuration": "Release"
+    "name": "mingw-w64",
+    "configurePreset": "mingw-w64"
   }
 ],
 "testPresets": [
@@ -45,9 +45,8 @@
   }
 },
 {
-  "name": "msvc", "inherits": "default",
-  "configurePreset": "msvc",
-  "configuration": "Release"
+  "name": "mingw-w64", "inherits": "default",
+  "configurePreset": "mingw-w64"
 }
 ],
 "workflowPresets": [
@@ -69,19 +68,19 @@
     ]
   },
   {
-    "name": "msvc",
+    "name": "mingw-w64",
     "steps": [
       {
         "type": "configure",
-        "name": "msvc"
+        "name": "mingw-w64"
       },
       {
         "type": "build",
-        "name": "msvc"
+        "name": "mingw-w64"
       },
       {
         "type": "test",
-        "name": "msvc"
+        "name": "mingw-w64"
       }
     ]
   }
