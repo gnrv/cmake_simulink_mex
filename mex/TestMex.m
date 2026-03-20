@@ -2,7 +2,10 @@ classdef (SharedTestFixtures={ matlab.unittest.fixtures.PathFixture(".")}) ...
   TestMex < matlab.unittest.TestCase
 
 methods(Static)
-function y = prepareModel(datatype, mexName)
+function y = prepareModel(datatype, mexName, width)
+  if nargin < 3
+    width = 80;
+  end
   model = 'mexTestModel';
   new_system(model);
   open_system(model);
@@ -13,8 +16,8 @@ function y = prepareModel(datatype, mexName)
   %add_block('simulink/Sources/In1', [model '/In']);
   numTimeSteps = 4; % example
   simData.time = [0 0.001 0.002 0.003]';        % example timesteps
-  simData.signals.values = randn(numTimeSteps, 80, datatype); % numTimeSteps × 80
-  simData.signals.dimensions = 80;              % vector width
+  simData.signals.values = randn(numTimeSteps, width, datatype); % numTimeSteps × width
+  simData.signals.dimensions = width;            % vector width
   assignin('base','simData',simData);
 
   add_block('simulink/Sources/From Workspace', [model '/In'], ...
@@ -47,6 +50,20 @@ end
 
 function test_singleExample(tc)
   y = tc.prepareModel('single', 'singleExample');
+  simData = evalin('base', 'simData');
+  a=simData.signals.values;
+  tc.verifyEqual(y, 2*a)
+end
+
+function test_timesThree(tc)
+  y = tc.prepareModel('double', 'timesThree');
+  simData = evalin('base', 'simData');
+  a=simData.signals.values;
+  tc.verifyEqual(y, 3*a)
+end
+
+function test_example_scalar(tc)
+  y = tc.prepareModel('double', 'example', 1);
   simData = evalin('base', 'simData');
   a=simData.signals.values;
   tc.verifyEqual(y, 2*a)
