@@ -1,4 +1,5 @@
-#define S_FUNCTION_NAME  testTimesTwo
+// NOTE: The mex file name and the S-function name must be the same.
+#define S_FUNCTION_NAME  timesThree
 #define S_FUNCTION_LEVEL 2
 
 #include "simstruc.h"
@@ -43,7 +44,7 @@ static void mdlInitializeSizes(SimStruct *S)
 
 /* Function: mdlInitializeSampleTimes =========================================
  * Abstract:
- *    Specifiy that we inherit our sample time from the driving block.
+ *    Specify that we inherit our sample time from the driving block.
  */
 static void mdlInitializeSampleTimes(SimStruct *S)
 {
@@ -54,7 +55,7 @@ static void mdlInitializeSampleTimes(SimStruct *S)
 
 /* Function: mdlOutputs =======================================================
  * Abstract:
- *    y = 2*u
+ *    y = 3*u
  */
 static void mdlOutputs(SimStruct *S, int_T tid)
 {
