@@ -9,6 +9,7 @@ function y = prepareModel(datatype, mexName, width)
   model = 'mexTestModel';
   new_system(model);
   open_system(model);
+  modelCleanup = onCleanup(@() bdclose(model)); %#ok<NASGU>
   set_param(model, ...
             'Solver', 'FixedStepDiscrete', ...  % fixed-step solver
             'FixedStep', '0.001');              % 1 ms step
@@ -34,8 +35,6 @@ function y = prepareModel(datatype, mexName, width)
   simOut = sim(model, 'SimulationMode', 'normal', 'StopTime', '0.003');
   ds = simOut.get('yout');
   y = ds.getElement(1).Values.Data;
-
-  close_system(model, 0);
 end
 end
 
